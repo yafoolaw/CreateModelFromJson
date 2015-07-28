@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 YouXianMing. All rights reserved.
 //
 
-#import "CreateModel.h"
+#import "M_CreateModel.h"
 
-@implementation CreateModel
+@implementation M_CreateModel
 
 - (void)createModel {
     if (self.modelName == nil ||
@@ -34,7 +34,7 @@
  */
 - (NSDictionary *)accessModelPlist {
     
-    NSString     *path = [[NSBundle mainBundle] pathForResource:@"CreateModel.plist" ofType:nil];
+    NSString     *path = [[NSBundle mainBundle] pathForResource:@"M_CreateModel.plist" ofType:nil];
     NSDictionary *data = [[NSDictionary alloc] initWithContentsOfFile:path];
     
     return data;
@@ -51,7 +51,7 @@
 
     // .h 文件头部信息
     NSString *head = \
-    [NSString stringWithFormat:@"//\n//  %@.h\n//\n//  http://www.cnblogs.com/YouXianMing/\n//  https://github.com/YouXianMing\n//\n//  Copyright (c) YouXianMing All rights reserved.\n//\n\n\n#import <Foundation/Foundation.h>\n\n\n@interface %@ : NSObject\n\n\n", self.modelName, self.modelName];
+    [NSString stringWithFormat:@"//\n//  %@.h\n//\n//  http://www.jianshu.com/users/09e77d340dcf/latest_articles/\n//  https://github.com/yafoolaw/CreateModelFromJson\n//\n//  Copyright (c) FrankLiu All rights reserved.\n//\n\n\n#import <Foundation/Foundation.h>\n\n\n@interface %@ : NSObject\n\n\n", self.modelName, self.modelName];
     [headerFileString appendString:head];
     
     
@@ -83,7 +83,7 @@
     
     // .m 文件头部信息
     NSString *head = \
-    [NSString stringWithFormat:@"//\n//  %@.m\n//\n//  http://www.cnblogs.com/YouXianMing/\n//  https://github.com/YouXianMing\n//\n//  Copyright (c) YouXianMing All rights reserved.\n//\n\n\n#import \"%@.h\"\n\n\n@implementation %@\n\n\n", self.modelName, self.modelName, self.modelName];
+    [NSString stringWithFormat:@"//\n//  %@.m\n//\n//  http://www.jianshu.com/users/09e77d340dcf/latest_articles/\n//  https://github.com/yafoolaw/CreateModelFromJson\n//\n//  Copyright (c) FrankLiu All rights reserved.\n//\n\n\n#import \"%@.h\"\n\n\n@implementation %@\n\n\n", self.modelName, self.modelName, self.modelName];
     [contentFileString appendString:head];
     
     // .m 中间信息
@@ -126,16 +126,17 @@
     
     [dictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if ([key isKindOfClass:[NSString class]]) {
+             NSString *tempKey = [NSString stringWithFormat:@"m_%@",key];
             if ([dictionary[key] isKindOfClass:[NSString class]]) {
-                [string appendString:[NSString stringWithFormat:@"@property (nonatomic, strong) NSString       *%@;\n", key]];
+                [string appendString:[NSString stringWithFormat:@"@property (nonatomic, strong) NSString       *%@;\n", tempKey]];
             } else if ([dictionary[key] isKindOfClass:[NSNumber class]]) {
-                [string appendString:[NSString stringWithFormat:@"@property (nonatomic, strong) NSNumber       *%@;\n", key]];
+                [string appendString:[NSString stringWithFormat:@"@property (nonatomic, strong) NSNumber       *%@;\n", tempKey]];
             } else if ([dictionary[key] isKindOfClass:[NSDictionary class]]) {
-                [string appendString:[NSString stringWithFormat:@"@property (nonatomic, strong) NSDictionary   *%@;\n", key]];
+                [string appendString:[NSString stringWithFormat:@"@property (nonatomic, strong) NSDictionary   *%@;\n", tempKey]];
             } else if ([dictionary[key] isKindOfClass:[NSArray class]]) {
-                [string appendString:[NSString stringWithFormat:@"@property (nonatomic, strong) NSArray        *%@;\n", key]];
+                [string appendString:[NSString stringWithFormat:@"@property (nonatomic, strong) NSArray        *%@;\n", tempKey]];
             } else {
-                [string appendString:[NSString stringWithFormat:@"//@property (nonatomic, strong) %@     *%@;\n", [dictionary[key] class],key]];
+                [string appendString:[NSString stringWithFormat:@"//@property (nonatomic, strong) %@     *%@;\n", [dictionary[key] class],tempKey]];
             }
         }
     }];
@@ -145,7 +146,7 @@
 
 + (void)createFileWithModelName:(NSString *)modelName dictionary:(NSDictionary *)dictionary {
     
-    CreateModel *model    = [CreateModel new];
+    M_CreateModel *model    = [M_CreateModel new];
     model.modelName       = modelName;
     model.inputDictionary = dictionary;
     

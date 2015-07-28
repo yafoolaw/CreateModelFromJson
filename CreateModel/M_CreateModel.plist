@@ -20,6 +20,9 @@
         return;
     }
     
+	key = [@&quot;m_&quot; stringByAppendingString:key];
+
+
     // 属性为数组时(数组中的所有元素都为相同类型的对象)
 //    if ([key isEqualToString:@&quot;属性名字&quot;] &amp;&amp; [value isKindOfClass:[NSArray class]]) {
 //        

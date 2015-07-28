@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CreateModel : NSObject
+@interface M_CreateModel : NSObject
 
 /**
  *  文件名字
